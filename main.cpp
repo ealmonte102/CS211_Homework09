@@ -25,11 +25,12 @@ int main() {
 void outputProperties(vector<File*>& files) {
 	if(files.size() != 0) {
 		File* lastElement = files.back ( );
-		cout << lastElement->getName ( ) << "\n";
-		cout << lastElement->getExtension ( ) << "\n";
-		cout << lastElement->getSize ( ) << "\n";
 		files.pop_back ( );
 		outputProperties (files);
 		files.push_back (lastElement);
+		cout << lastElement->getName ( ) << "\n";
+		cout << lastElement->getExtension ( ) << "\n";
+		cout << lastElement->getSize ( ) << "\n";
 	}
 }
+
