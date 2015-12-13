@@ -2,16 +2,19 @@
 // Created by Evan Almonte
 //  
 #include "File.hpp"
-#include <vector>
-#include <iostream>
 #include "ImageFile.hpp"
 #include "TextFile.hpp"
+#include <iostream>
+#include <string>
+#include <vector>
 
 using std::vector;
 using std::cout;
 
 
 void outputProperties (vector<File*>& files);
+vector<File*> filterFiles (vector<File*>& files, std::string extension);
+void filterFilesRec (vector<File*>& sourceVector, vector<File*>& destVector, std::string extension);
 
 int main() {
 	vector<File*> vecOfFiles;
@@ -34,3 +37,18 @@ void outputProperties(vector<File*>& files) {
 	}
 }
 
+vector<File*> filterFiles(vector<File*> files, std::string extension) {
+	vector<File*> filesToReturn;
+	filterFilesRec (files, filesToReturn, extension);
+	return filesToReturn;
+}
+
+void filterFilesRec(vector<File*>& sourceVector, vector<File*>& destVector, std::string extension) {
+	if (sourceVector.size ( ) == 0) { return; }
+	File* fileAtEnd = sourceVector.back ( );
+	sourceVector.pop_back ( );
+	filterFilesRec (sourceVector, destVector, extension);
+	if(fileAtEnd->getExtension() == extension) {
+		destVector.push_back (fileAtEnd);
+	}
+}
